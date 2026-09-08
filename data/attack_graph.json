@@ -1,0 +1,17 @@
+{
+  "starting_points": ["WS-EDGE-01", "VPN-USER-01"],
+  "protected_targets": ["TIER0-DC-01", "FINANCE-DB-01"],
+  "asset_sensitivity": {
+    "TIER0-DC-01": 40,
+    "FINANCE-DB-01": 35
+  },
+  "edges": [
+    {"source": "WS-EDGE-01", "target": "APP-SRV-01", "type": "network_reachability"},
+    {"source": "APP-SRV-01", "target": "SVC-APP-01", "type": "service_account_dependency"},
+    {"source": "SVC-APP-01", "target": "MGMT-SRV-01", "type": "local_admin"},
+    {"source": "MGMT-SRV-01", "target": "TIER0-DC-01", "type": "management_access"},
+    {"source": "VPN-USER-01", "target": "OPS-GROUP-01", "type": "privileged_group"},
+    {"source": "OPS-GROUP-01", "target": "FINANCE-DB-01", "type": "protected_resource_access"},
+    {"source": "VPN-USER-01", "target": "APP-SRV-01", "type": "authentication_trust"}
+  ]
+}
