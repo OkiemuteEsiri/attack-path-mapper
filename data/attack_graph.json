@@ -1,9 +1,15 @@
 {
-  "starting_points": ["WS-EDGE-01", "VPN-USER-01"],
-  "protected_targets": ["TIER0-DC-01", "FINANCE-DB-01"],
-  "asset_sensitivity": {
-    "TIER0-DC-01": 40,
-    "FINANCE-DB-01": 35
+  "starting_points": ["WS-EDGE-01", "VPN-USER-01", "DEV-USER-02"],
+  "protected_targets": ["TIER0-DC-01", "FINANCE-DB-01", "PKI-CA-01"],
+  "asset_criticality": {
+    "TIER0-DC-01": "critical",
+    "FINANCE-DB-01": "critical",
+    "PKI-CA-01": "critical"
+  },
+  "controls": {
+    "VPN-USER-01->OPS-GROUP-01": ["phishing-resistant MFA", "conditional access"],
+    "MGMT-SRV-01->TIER0-DC-01": ["PAM approval", "admin workstation restriction"],
+    "DEV-USER-02->DEV-JUMP-01": ["MFA"]
   },
   "edges": [
     {"source": "WS-EDGE-01", "target": "APP-SRV-01", "type": "network_reachability"},
@@ -12,6 +18,11 @@
     {"source": "MGMT-SRV-01", "target": "TIER0-DC-01", "type": "management_access"},
     {"source": "VPN-USER-01", "target": "OPS-GROUP-01", "type": "privileged_group"},
     {"source": "OPS-GROUP-01", "target": "FINANCE-DB-01", "type": "protected_resource_access"},
-    {"source": "VPN-USER-01", "target": "APP-SRV-01", "type": "authentication_trust"}
+    {"source": "VPN-USER-01", "target": "APP-SRV-01", "type": "authentication_trust"},
+    {"source": "DEV-USER-02", "target": "DEV-JUMP-01", "type": "authentication_trust"},
+    {"source": "DEV-JUMP-01", "target": "BUILD-SVC-01", "type": "credential_reuse"},
+    {"source": "BUILD-SVC-01", "target": "PKI-OPS-01", "type": "delegated_control"},
+    {"source": "PKI-OPS-01", "target": "PKI-CA-01", "type": "management_access"},
+    {"source": "DEV-JUMP-01", "target": "APP-SRV-01", "type": "network_reachability"}
   ]
 }
