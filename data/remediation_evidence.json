@@ -1,0 +1,10 @@
+{
+  "finding_id": "AP-SYNTHETIC-DEMO",
+  "change_reference": "CHG-SYN-1042",
+  "control_owner": "Identity Engineering",
+  "before_state": "DEV jump host reused a build service credential with delegated PKI administration reachability",
+  "after_state": "build identity rotated to managed credentials; delegated PKI administration removed; jump host restricted",
+  "validation_method": "offline graph comparison plus control-owner evidence review",
+  "validation_result": "passed",
+  "notes": "Fictional evidence package for demonstrating closure governance. No real system or credential data is represented."
+}
